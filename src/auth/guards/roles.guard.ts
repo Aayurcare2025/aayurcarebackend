@@ -3,7 +3,7 @@ import {
     Injectable,
     HttpException, HttpStatus, CanActivate
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+    import { Reflector } from '@nestjs/core';
 import { UserRole } from 'src/enum/role.enum';
 import { JwtPayload } from '../interface/jwt-payload.interface';
 @Injectable()

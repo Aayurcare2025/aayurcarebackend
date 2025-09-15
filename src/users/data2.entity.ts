@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 
 @Entity()
-export class Data1 extends BaseEntity {
+export class Data2 extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -10,9 +10,6 @@ export class Data1 extends BaseEntity {
 
   @Column({ type: 'int', nullable: true })
   Accident: number;
-
-  @Column({ type: 'int', nullable: true })
-  OPD: number;
 
   @Column({ type: 'int', nullable: true })
   Total_sum_insured: number;

@@ -6,9 +6,10 @@ import { User } from './user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { JwtModule } from '@nestjs/jwt';
 import { Data1 } from './data.entity';
+import { Data2 } from './data2.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([User,Data1]),
+  imports:[TypeOrmModule.forFeature([User,Data1,Data2]),
 JwtModule.register({
       secret: 'secret', 
       signOptions: { expiresIn: '1h' },
