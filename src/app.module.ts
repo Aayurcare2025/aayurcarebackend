@@ -39,7 +39,7 @@
 
 
 import { TypeOrmModule } from '@nestjs/typeorm';
-// import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Module } from '@nestjs/common';
@@ -55,7 +55,7 @@ import { Data2 } from './users/data2.entity';
     ConfigModule.forRoot({
       isGlobal: true,  // makes env vars available everywhere
     }),
-    // AuthModule, 
+    AuthModule, 
     UsersModule,
 
     // ✅ Use ConfigService for DB settings
@@ -66,6 +66,7 @@ import { Data2 } from './users/data2.entity';
         type: 'mysql',
         host: config.get<string>('DB_HOST'),
       port: parseInt(config.get<string>('DB_PORT') || '3306', 10),
+
         username: config.get<string>('DB_USERNAME'),
         password: config.get<string>('DB_PASSWORD'),
         database: config.get<string>('DB_NAME'),
