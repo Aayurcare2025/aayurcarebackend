@@ -10,10 +10,10 @@ export class Opd extends BaseEntity {
   plan:string;
 
 
-  @Column()
+ @Column({ type: 'int', nullable: true })
   Sum_Insured:number;
 
-  @Column()
+ @Column({ type: 'int', nullable: true })
   premium:number;
 
 
