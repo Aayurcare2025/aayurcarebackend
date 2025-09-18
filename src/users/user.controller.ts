@@ -1,8 +1,8 @@
 
 import { Userdto } from "./user.dto";
 import { User } from "./user.entity";
-import { AuthGuard } from "src/auth/guards/auth.guard";
-import { RolesGuard } from "src/auth/guards/roles.guard";
+// import { AuthGuard } from "src/auth/guards/auth.guard";
+// import { RolesGuard } from "src/auth/guards/roles.guard";
 import { UserRole } from "src/enum/role.enum";
 import { Roles } from "src/auth/decorators/roles.decorator";
 import * as bcrypt from 'bcrypt';
