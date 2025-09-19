@@ -4,32 +4,26 @@ import { UserRole } from "src/enum/role.enum";
 
 
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+@Entity({ name: 'user' })
+export class User extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-@Entity({name:'user'})
-export class User extends BaseEntity{
-    @PrimaryGeneratedColumn()
-    id:number
-    
+  @Column({ name: 'full_name' })
+  fullName: string;
+
   @Column()
-    // @Column({ unique: true })
-    username:string
-    
-//    @Column({ unique: true })
-   @Column()
-    password:string 
+  email: string;
 
+  @Column()
+  username: string;
 
-    @Column()
-    role: UserRole;
-    
-    
+  @Column()
+  password: string;
 
-//     @OneToMany(() => Employee, (employee) => employee.user)
-// employees: Employee[];
+  // @Column() // don't really need confirmPassword in DB
+  // confirmPassword: string;
 
-
-//    @OneToMany(() => Leave, (leave) => leave.user)
-// leaves: Leave[];
-
-
+  @Column()
+  role: UserRole;
 }

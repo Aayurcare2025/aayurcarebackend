@@ -1,5 +1,5 @@
 
-import { Userdto } from "./user.dto";
+import { UserDto } from "./user.dto";
 import { User } from "./user.entity";
 import { AuthGuard } from "src/auth/guards/auth.guard";
 import { RolesGuard } from "src/auth/guards/roles.guard";
@@ -32,7 +32,7 @@ export class UserController {
 
   @Post('/register')
   async UserRegister(
-    @Body(ValidationPipe) userRegister: Userdto
+    @Body(ValidationPipe) userRegister: UserDto
   ): Promise<any> {
     try {
       return await this.userService.userregister(userRegister);
@@ -43,7 +43,7 @@ export class UserController {
 
 
   @Post('/login')
-  async login(@Body() userLogin: Userdto): Promise<any> {
+  async login(@Body() userLogin: UserDto): Promise<any> {
     const user = await this.userService.findOne(userLogin.username);
     if (!user) {
       throw new UnauthorizedException('Invalid username or password');

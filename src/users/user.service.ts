@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Userdto } from './user.dto';
+import { UserDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -25,39 +25,75 @@ export class UsersService {
   return user ?? undefined;  // converts null → undefined
 }
 
-async userregister(userregister: Userdto): Promise<User> {
-  // Check if username already exists
-  const existingUser = await this.userRepository.findOne({
-    where: { username: userregister.username },
-  });
-  if (existingUser) {
-    throw new Error('Username already exists. Please choose a different one.');
-  }
-  try {
-    const salt = await bcrypt.genSalt();
-    const hashedpassword = await bcrypt.hash(userregister.password, salt);
+// async userregister(userregister: Userdto): Promise<User> {
+//   // Check if username already exists
+//   const existingUser = await this.userRepository.findOne({
+//     where: { username: userregister.username },
+//   });
+//   if (existingUser) {
+//     throw new Error('Username already exists. Please choose a different one.');
+//   }
+//   try {
+//     const salt = await bcrypt.genSalt();
+//     const hashedpassword = await bcrypt.hash(userregister.password, salt);
 
-    const user = new User();
-    user.username = userregister.username;
-    user.password = hashedpassword;
-    user.role = userregister.role || UserRole.USER
+//     const user = new User();
+//     user.username = userregister.username;
+//     user.password = hashedpassword;
+//     user.role = userregister.role || UserRole.USER
 
-    await user.save(); 
+//     await user.save(); 
     
 
-    const { password, ...rest } = user;
-    return rest as User;
-  } catch (error) {
-    if (
+//     const { password, ...rest } = user;
+//     return rest as User;
+//   } catch (error) {
+//     if (
      
-      error.code === 'ER_DUP_ENTRY' || 
-      (error.message && error.message.includes('Duplicate entry'))
-    ) {
-      throw new Error('Username already exists. Please choose a different one.');
-    }
-    throw error;
+//       error.code === 'ER_DUP_ENTRY' || 
+//       (error.message && error.message.includes('Duplicate entry'))
+//     ) {
+//       throw new Error('Username already exists. Please choose a different one.');
+//     }
+//     throw error;
+//   }
+// }
+
+async userregister(userRegister: UserDto): Promise<Partial<User>> {
+  // Check if username exists
+  const existingUser = await this.userRepository.findOne({
+    where: { username: userRegister.username },
+  });
+  if (existingUser) {
+    throw new Error("Username already exists. Please choose a different one.");
   }
+
+  // Check password == confirmPassword
+  if (userRegister.password !== userRegister.confirmPassword) {
+    throw new Error("Passwords do not match.");
+  }
+
+  // Hash password
+  const salt = await bcrypt.genSalt();
+  const hashedPassword = await bcrypt.hash(userRegister.password, salt);
+
+  // Create user
+  const user = new User();
+  user.fullName = userRegister.fullName;
+  user.email = userRegister.email;
+  user.username = userRegister.username;
+  user.password = hashedPassword;
+
+  user.role = userRegister.role || UserRole.USER;
+
+  await user.save();
+
+  // Return user without password
+  // const { password, confirmPassword, ...rest } = user;
+  const { password, ...rest } = user;
+  return rest;
 }
+
 
   // async applyInsurance(insuranceDto: InsuranceDto): Promise<Insurance> {
   //   try {

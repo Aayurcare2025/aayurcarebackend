@@ -34,6 +34,7 @@
     "docker": "^1.0.0",
     "multer": "^2.0.2",
     "mysql2": "^3.14.5",
+    "react-router-dom": "^7.9.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "xlsx": "^0.18.5"
